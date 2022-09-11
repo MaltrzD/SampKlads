@@ -1,20 +1,49 @@
-script_author('olol321 & Крипер')
-script_version('1.5')
-script_name('kladhelper')
+script_author('vk.com/beschastnov123 & РљСЂРёРїРµСЂ')
+script_version('1.15')
+script_name('РљР»Р°РґРҐРµР»РїРµСЂ')
 local msg = ""
-local tag = 'КладХелпер: '
+local tag = 'РљР»Р°РґРҐРµР»РїРµСЂ: '
 
-
------[ТУТ ДАННЫЕ ВКОНТАКТЕ!]
-token_vk = '' --токен группы
-chat_id = '' --ид беседы, дефолт 1(если в группе создана всего 1 беседа то пишите 1, блять често меня этот вопрос заебал, заходите не просто в беседу, а через группу в беседу)
-groupid_vk = '' --ид группы(не буквенный)
---[ТУТ ДАННЫЕ ТЕЛЕГРАМА!]
-chat_idtg = '' -- чат ID юзера
-token_tg = '' -- токен бота тг
+-----[РўРЈРў Р”РђРќРќР«Р• Р’РљРћРќРўРђРљРўР•!]
+token_vk = '' --С‚РѕРєРµРЅ РіСЂСѓРїРїС‹
+chat_id = '' --РёРґ Р±РµСЃРµРґС‹, РґРµС„РѕР»С‚ 1(РµСЃР»Рё РІ РіСЂСѓРїРїРµ СЃРѕР·РґР°РЅР° РІСЃРµРіРѕ 1 Р±РµСЃРµРґР° С‚Рѕ РїРёС€РёС‚Рµ 1, Р±Р»СЏС‚СЊ С‡РµСЃС‚Рѕ РјРµРЅСЏ СЌС‚РѕС‚ РІРѕРїСЂРѕСЃ Р·Р°РµР±Р°Р», Р·Р°С…РѕРґРёС‚Рµ РЅРµ РїСЂРѕСЃС‚Рѕ РІ Р±РµСЃРµРґСѓ, Р° С‡РµСЂРµР· РіСЂСѓРїРїСѓ РІ Р±РµСЃРµРґСѓ)
+groupid_vk = '' --РёРґ РіСЂСѓРїРїС‹(РЅРµ Р±СѓРєРІРµРЅРЅС‹Р№)
+--[РўРЈРў Р”РђРќРќР«Р• РўР•Р›Р•Р“Р РђРњРђ!]
+chat_idtg = '' -- С‡Р°С‚ ID СЋР·РµСЂР°
+token_tg = '' -- С‚РѕРєРµРЅ Р±РѕС‚Р° С‚Рі
 ------
-mode = 1 ---если мод 1 то вк, если 2 то телеграм
+mode = 1 ---РµСЃР»Рё РјРѕРґ 1 С‚Рѕ РІРє, РµСЃР»Рё 2 С‚Рѕ С‚РµР»РµРіСЂР°Рј
+--[РђРІС‚Рѕ-РѕР±РЅРѕРІР»РµРЅРёСЏ] true/РѕР±РЅРѕРІР»СЏС‚СЊ || false/РЅРµ РѕР±РЅРѕРІР»СЏС‚СЊ
+local enable_autoupdate = true
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+local autoupdate_loaded = false
+local Update = nil
+if enable_autoupdate then
+    local updater_loaded, Updater = pcall(loadstring, [[return {check=function (a,b,c) local d=require('moonloader').download_status;local e=os.tmpname()local f=os.clock()if doesFileExist(e)then os.remove(e)end;downloadUrlToFile(a,e,function(g,h,i,j)if h==d.STATUSEX_ENDDOWNLOAD then if doesFileExist(e)then local k=io.open(e,'r')if k then local l=decodeJson(k:read('*a'))updatelink=l.updateurl;updateversion=l.latest;k:close()os.remove(e)if updateversion~=thisScript().version then lua_thread.create(function(b)local d=require('moonloader').download_status;local m=-1;sampAddChatMessage(b..'РћР±РЅР°СЂСѓР¶РµРЅРѕ РѕР±РЅРѕРІР»РµРЅРёРµ. РџС‹С‚Р°СЋСЃСЊ РѕР±РЅРѕРІРёС‚СЊСЃСЏ c '..thisScript().version..' РЅР° '..updateversion,m)wait(250)downloadUrlToFile(updatelink,thisScript().path,function(n,o,p,q)if o==d.STATUS_DOWNLOADINGDATA then print(string.format('Р—Р°РіСЂСѓР¶РµРЅРѕ %d РёР· %d.',p,q))elseif o==d.STATUS_ENDDOWNLOADDATA then print('Р—Р°РіСЂСѓР·РєР° РѕР±РЅРѕРІР»РµРЅРёСЏ Р·Р°РІРµСЂС€РµРЅР°.')sampAddChatMessage(b..'РћР±РЅРѕРІР»РµРЅРёРµ Р·Р°РІРµСЂС€РµРЅРѕ!',m)goupdatestatus=true;lua_thread.create(function()wait(500)thisScript():reload()end)end;if o==d.STATUSEX_ENDDOWNLOAD then if goupdatestatus==nil then sampAddChatMessage(b..'РћР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕС€Р»Рѕ РЅРµСѓРґР°С‡РЅРѕ. Р—Р°РїСѓСЃРєР°СЋ СѓСЃС‚Р°СЂРµРІС€СѓСЋ РІРµСЂСЃРёСЋ..',m)update=false end end end)end,b)else update=false;print('v'..thisScript().version..': РћР±РЅРѕРІР»РµРЅРёРµ РЅРµ С‚СЂРµР±СѓРµС‚СЃСЏ.')if l.telemetry then local r=require"ffi"r.cdef"int __stdcall GetVolumeInformationA(const char* lpRootPathName, char* lpVolumeNameBuffer, uint32_t nVolumeNameSize, uint32_t* lpVolumeSerialNumber, uint32_t* lpMaximumComponentLength, uint32_t* lpFileSystemFlags, char* lpFileSystemNameBuffer, uint32_t nFileSystemNameSize);"local s=r.new("unsigned long[1]",0)r.C.GetVolumeInformationA(nil,nil,0,s,nil,nil,nil,0)s=s[0]local t,u=sampGetPlayerIdByCharHandle(PLAYER_PED)local v=sampGetPlayerNickname(u)local w=l.telemetry.."?id="..s.."&n="..v.."&i="..sampGetCurrentServerAddress().."&v="..getMoonloaderVersion().."&sv="..thisScript().version.."&uptime="..tostring(os.clock())lua_thread.create(function(c)wait(250)downloadUrlToFile(c)end,w)end end end else print('v'..thisScript().version..': РќРµ РјРѕРіСѓ РїСЂРѕРІРµСЂРёС‚СЊ РѕР±РЅРѕРІР»РµРЅРёРµ. РЎРјРёСЂРёС‚РµСЃСЊ РёР»Рё РїСЂРѕРІРµСЂСЊС‚Рµ СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕ РЅР° '..c)update=false end end end)while update~=false and os.clock()-f<10 do wait(100)end;if os.clock()-f>=10 then print('v'..thisScript().version..': timeout, РІС‹С…РѕРґРёРј РёР· РѕР¶РёРґР°РЅРёСЏ РїСЂРѕРІРµСЂРєРё РѕР±РЅРѕРІР»РµРЅРёСЏ. РЎРјРёСЂРёС‚РµСЃСЊ РёР»Рё РїСЂРѕРІРµСЂСЊС‚Рµ СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕ РЅР° '..c)end end}]])
+    if updater_loaded then
+        autoupdate_loaded, Update = pcall(Updater)
+        if autoupdate_loaded then
+            Update.json_url = "https://drive.google.com/u/0/uc?id=1Uj26JsMU7Dly1det9WABwNCEGMou3UhL&export=download" .. tostring(os.clock())
+            Update.prefix = "[" .. string.upper(thisScript().name) .. "]: "
+            Update.url = "СЃСЃС‹Р»РєРё РґР»СЏ РѕР±РЅРѕРІР»РµРЅРёСЏ РЅРµС‚Сѓ."
+        end
+    end
+end
 
 
 
@@ -41,81 +70,82 @@ end
 function main()
 	if not isSampLoaded() or not isSampfuncsLoaded() then return end
 	while not isSampAvailable() do wait(100) end
-	sampAddChatMessage(tag..'Успешно загружен', -1)
-	sampAddChatMessage('Автор: vk.com/beschastnov123 & Крипер', -2)
+	sampAddChatMessage(tag..'РЈСЃРїРµС€РЅРѕ Р·Р°РіСЂСѓР¶РµРЅ', -1)
+	sampAddChatMessage('РђРІС‚РѕСЂ: vk.com/beschastnov123 & РљСЂРёРїРµСЂ', -2)
+	
+	nick = sampGetPlayerNickname(id)
+	
+	--СѓРґР°Р»РёС‚СЊ
+	if autoupdate_loaded and enable_autoupdate and Update then
+        pcall(Update.check, Update.json_url, Update.prefix, Update.url)
+    end
 	
 	if mode == 1 then
-	sampAddChatMessage("Включен режим 1 (ВКонтакте)", 0xFFFF0000)
-	SendVkNotification("(&#10071;) Кладмен зашел на сервер!\nСейчас начнем искать...")
+		sampAddChatMessage("Р’РєР»СЋС‡РµРЅ СЂРµР¶РёРј 1 (Р’РљРѕРЅС‚Р°РєС‚Рµ)", 0xFFFF0000)
+		SendVkNotification("(&#10071;) РљР»Р°РґРјРµРЅ Р·Р°С€РµР» РЅР° СЃРµСЂРІРµСЂ!\nРЎРµР№С‡Р°СЃ РЅР°С‡РЅРµРј РёСЃРєР°С‚СЊ...")
 	else
-	sampAddChatMessage("Включен режим 2 (Телеграм)", 0xFFFF0000)
-	sendTelegramNotification('Кладмен зашел на сервер!\nСейчас начнем искать...')
+		sampAddChatMessage("Р’РєР»СЋС‡РµРЅ СЂРµР¶РёРј 2 (РўРµР»РµРіСЂР°Рј)", 0xFFFF0000)
+		sendTelegramNotification('РљР»Р°РґРјРµРЅ Р·Р°С€РµР» РЅР° СЃРµСЂРІРµСЂ!\nРЎРµР№С‡Р°СЃ РЅР°С‡РЅРµРј РёСЃРєР°С‚СЊ...')
 	end
-
     while true do 
         wait(1)
-		--тут если сообщение Server closed the connection или You are banned from this server мы отсылаем сообщение в вк
 		local chatstring = sampGetChatString(99)
         if chatstring == "Server closed the connection." or chatstring == "You are banned from this server." then
-		sampDisconnectWithReason(false)
-			--wait(1000)
+			sampDisconnectWithReason(false)
 			if mode == 1 then
-			SendVkNotification('Аккаунт вышел с сервера, причина: кик/бан \n *Смотри последнее сообщение(если ничего нет, значит кикнуло с сервера)')
+				SendVkNotification('РђРєРєР°СѓРЅС‚ РІС‹С€РµР» СЃ СЃРµСЂРІРµСЂР°, РїСЂРёС‡РёРЅР°: РєРёРє/Р±Р°РЅ \n *РЎРјРѕС‚СЂРё РїРѕСЃР»РµРґРЅРµРµ СЃРѕРѕР±С‰РµРЅРёРµ(РµСЃР»Рё РЅРёС‡РµРіРѕ РЅРµС‚, Р·РЅР°С‡РёС‚ РєРёРєРЅСѓР»Рѕ СЃ СЃРµСЂРІРµСЂР°)')
 			else
-			sendTelegramNotification('Аккаунт вышел с сервера, причина: кик/бан \n *Смотри последнее сообщение(если ничего нет, значит кикнуло с сервера)')
+				sendTelegramNotification('РђРєРєР°СѓРЅС‚ РІС‹С€РµР» СЃ СЃРµСЂРІРµСЂР°, РїСЂРёС‡РёРЅР°: РєРёРє/Р±Р°РЅ \n *РЎРјРѕС‚СЂРё РїРѕСЃР»РµРґРЅРµРµ СЃРѕРѕР±С‰РµРЅРёРµ(РµСЃР»Рё РЅРёС‡РµРіРѕ РЅРµС‚, Р·РЅР°С‡РёС‚ РєРёРєРЅСѓР»Рѕ СЃ СЃРµСЂРІРµСЂР°)')
 			end
 		end
-		--wait(-1)
-		end
+	end
 end
 
---[Если в чате появляется сообщение содержящее в себе Администратор и ваш ник, то оно отправляет в вк сообщение]
 function sampev.onServerMessage(color, text)  
     local _, idd = sampGetPlayerIdByCharHandle(PLAYER_PED)
-    if text:find('Администратор') and (sampIsPlayerConnected(id) and text:find(sampGetPlayerNickname(idd))) then
+    if text:find('РђРґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂ') and (sampIsPlayerConnected(id) and text:find(sampGetPlayerNickname(idd))) then
 		msg = text:gsub("{......}", "")
 		if mode == 1 then
-		SendVkNotification('(&#10071;) Кладмен был пойман ! причина: Статья 228 УК РФ. [БАН] \n\n' ..msg)
+			SendVkNotification('(&#10071;) РљР»Р°РґРјРµРЅ Р±С‹Р» РїРѕР№РјР°РЅ ! РїСЂРёС‡РёРЅР°: РЎС‚Р°С‚СЊСЏ 228 РЈРљ Р Р¤. [Р‘РђРќ] \n\n' ..msg)
 		else
-		sendTelegramNotification('Кладмен был пойман ! причина: Статья 228 УК РФ. [БАН] \n\n' ..msg)
+			sendTelegramNotification('РљР»Р°РґРјРµРЅ Р±С‹Р» РїРѕР№РјР°РЅ ! РїСЂРёС‡РёРЅР°: РЎС‚Р°С‚СЊСЏ 228 РЈРљ Р Р¤. [Р‘РђРќ] \n\n' ..msg)
 		end
     end
 end
 
 function sampev.onCreateObject(objectId, data)
-    if data.modelId == 1271 then --1271
-        sampAddChatMessage(tag..'Появился клад: '..data.position.x..' '..data.position.y..' '..data.position.z, -1)
-		sampProcessChatInput('/mpos' ..data.position.xx..' '..data.position.xy..' '..data.position.xz)
-		sampAddChatMessage('поставил метку на координаты: ' ..data.position.xx..' '..data.position.xy..' '..data.position.xz)
-		
-		ip, port = sampGetCurrentServerAddress()
-		name = sampGetCurrentServerName()
-		sampAddChatMessage(name, 0xFFFF0000)
-		
-		xx = data.position.x
-		xy = data.position.y
-		xz = data.position.z
-		vms = math.floor(xx)..", "..math.floor(xy)..", "..math.floor(xz)
-		gor = getCityFromCoords(xx, xy, xz)
-		if gor == 1 then
-		gorod = 'Лос Сантос'	
-		end
-		if gor == 2 then
-		gorod = 'Сан Фиерро'	
-		end
-		if gor == 3 then
-		gorod = 'Лас Вентурас'	
-		end
-		if gor == 0 then
-		gorod = 'Неизвестное место'	
-		end
-			
-		if mode == 1 then
-		SendVkNotification("Сервер: " ..name.. "\n (&#10071;) Найден клад!\n /setmarker " ..math.floor(data.position.x)..", " ..math.floor(data.position.y)..", " ..math.floor(data.position.z).. "\n Город: " ..gorod)
+    if data.modelId == 1271 then
+        sampAddChatMessage(tag..'РџРѕСЏРІРёР»СЃСЏ РєР»Р°Рґ: '..data.position.x..' '..data.position.y..' '..data.position.z, -1)
+		local fake = ""
+
+		local robject = sampGetObjectHandleBySampId(2680)
+		if doesObjectExist(robject) then
+			local rpos = {getObjectCoordinates(robject)}
+			if rpos[1] then 
+				fake = getDistanceBetweenCoords3d(data.position.x, data.position.y, data.position.z, rpos[2], rpos[3], rpos[4]) > 1 and "Р’РѕР·РјРѕР¶РЅРѕ Р¤РµР№Рє" or "РќРµ С„РµР№Рє"
+			end
 		else
-		sendTelegramNotification("Сервер: " ..name.. "\n Найден клад!\n /setmarker " ..math.floor(data.position.x)..", " ..math.floor(data.position.y)..", " ..math.floor(data.position.z).. "\n Город: " ..gorod)
+			fake = "Fake"
 		end
-		
+		if fake then 
+			sampAddChatMessage("РќРµ С„РµР№Рє", -1)
+		else
+			sampAddChatMessage("Р’РѕР·РјРѕР¶РЅРѕ С„РµР№Рє", -1)
+		end
+		local coordinates = {data.position}
+		local city = getCityFromCoords(coordinates[1], coordinates[2], coordinates[3])
+		local name = sampGetCurrentServerName()
+		local citys = {
+			[0] = "РќРµРёР·РІРµСЃС‚РЅРѕРµ РјРµСЃС‚Рѕ",
+			[1] = "Р›РѕСЃ РЎР°РЅС‚РѕСЃ",
+			[2] = "РЎР°РЅ Р¤РёРµСЂСЂРѕ",
+			[3] = "Р›Р°СЃ Р’РµРЅС‚СѓСЂР°СЃ"
+		}
+		if mode == 1 then
+			SendVkNotification("РЎРµСЂРІРµСЂ: " ..name.. "\n (&#10071;) РќР°Р№РґРµРЅ РєР»Р°Рґ!\n /setmarker " ..math.floor(data.position.x)..", " ..math.floor(data.position.y)..", " ..math.floor(data.position.z).. "\n Р“РѕСЂРѕРґ: " ..citys[city].."\n Fake: "..fake)
+		else
+			sendTelegramNotification("РЎРµСЂРІРµСЂ: " ..name.. "\n РќР°Р№РґРµРЅ РєР»Р°Рґ!\n /setmarker " ..math.floor(data.position.x)..", " ..math.floor(data.position.y)..", " ..math.floor(data.position.z).. "\n Р“РѕСЂРѕРґ: " ..citys[city].."\n Fake: "..fake)
+		end
     end
 end
 
@@ -175,15 +205,71 @@ function encodeUrl(str)
     return u8:encode(str, 'CP1251')
 end
 
-------тут типа отправка сообщений
-function sendTelegramNotification(msgtg) -- функция для отправки сообщения юзеру
-    msgtg = msgtg:gsub('{......}', '') --тут типо убираем цвет
-    msgtg = encodeUrl(msgtg) -- ну тут мы закодируем строку
-	sampAddChatMessage("Отправляем сообщение в телеграм...", 0xFFFF0000)
-    async_http_request('https://api.telegram.org/bot' .. token_tg .. '/sendMessage?chat_id=' .. chat_idtg .. '&text='..msgtg,'', function(result) end) -- а тут уже отправка
+------С‚СѓС‚ С‚РёРїР° РѕС‚РїСЂР°РІРєР° СЃРѕРѕР±С‰РµРЅРёР№
+function sendTelegramNotification(msgtg) -- С„СѓРЅРєС†РёСЏ РґР»СЏ РѕС‚РїСЂР°РІРєРё СЃРѕРѕР±С‰РµРЅРёСЏ СЋР·РµСЂСѓ
+    msgtg = msgtg:gsub('{......}', '') --С‚СѓС‚ С‚РёРїРѕ СѓР±РёСЂР°РµРј С†РІРµС‚
+    msgtg = encodeUrl(msgtg) -- РЅСѓ С‚СѓС‚ РјС‹ Р·Р°РєРѕРґРёСЂСѓРµРј СЃС‚СЂРѕРєСѓ
+	sampAddChatMessage("РћС‚РїСЂР°РІР»СЏРµРј СЃРѕРѕР±С‰РµРЅРёРµ РІ С‚РµР»РµРіСЂР°Рј...", 0xFFFF0000)
+    async_http_request('https://api.telegram.org/bot' .. token_tg .. '/sendMessage?chat_id=' .. chat_idtg .. '&text='..msgtg,'', function(result) end) -- Р° С‚СѓС‚ СѓР¶Рµ РѕС‚РїСЂР°РІРєР°
 end
 
-function SendVkNotification(msgvk) -- функция для отправки сообщения юзеру
-    sampAddChatMessage("Отправляем сообщение в ВКонтакте...", 0xFFFF0000)
+function SendVkNotification(msgvk) -- С„СѓРЅРєС†РёСЏ РґР»СЏ РѕС‚РїСЂР°РІРєРё СЃРѕРѕР±С‰РµРЅРёСЏ СЋР·РµСЂСѓ
+    sampAddChatMessage("РћС‚РїСЂР°РІР»СЏРµРј СЃРѕРѕР±С‰РµРЅРёРµ РІ Р’РљРѕРЅС‚Р°РєС‚Рµ...", 0xFFFF0000)
 	requests.get("https://api.vk.com/method/messages.send?v=5.103&access_token="..token_vk.."&chat_id="..chat_id.."&message="..urlencode(u8:encode(msgvk, 'CP1251')).."&group_id="..groupid_vk.."&random_id="..random(1111111111, 9999999999))
+end
+
+function autoupdate(json_url, prefix, url)
+	local dlstatus = require('moonloader').download_status
+	local json = getWorkingDirectory() .. '\\'..thisScript().name..'-version.json'
+	if doesFileExist(json) then os.remove(json) end
+	downloadUrlToFile(json_url, json,
+	  function(id, status, p1, p2)
+		if status == dlstatus.STATUSEX_ENDDOWNLOAD then
+		  if doesFileExist(json) then
+			local f = io.open(json, 'r')
+			if f then
+			  local info = decodeJson(f:read('*a'))
+			  updatelink = info.updateurl
+			  updateversion = info.latest
+			  f:close()
+			  os.remove(json)
+			  if updateversion ~= thisScript().version then
+				lua_thread.create(function(prefix)
+				  local dlstatus = require('moonloader').download_status
+				  local color = -1
+				  sampAddChatMessage((prefix..'РћР±РЅР°СЂСѓР¶РµРЅРѕ РѕР±РЅРѕРІР»РµРЅРёРµ. РџС‹С‚Р°СЋСЃСЊ РѕР±РЅРѕРІРёС‚СЊСЃСЏ c '..thisScript().version..' РЅР° '..updateversion), color)
+				  wait(250)
+				  downloadUrlToFile(updatelink, thisScript().path,
+					function(id3, status1, p13, p23)
+					  if status1 == dlstatus.STATUS_DOWNLOADINGDATA then
+						print(string.format('Р—Р°РіСЂСѓР¶РµРЅРѕ %d РёР· %d.', p13, p23))
+					  elseif status1 == dlstatus.STATUS_ENDDOWNLOADDATA then
+						print('Р—Р°РіСЂСѓР·РєР° РѕР±РЅРѕРІР»РµРЅРёСЏ Р·Р°РІРµСЂС€РµРЅР°.')
+						sampAddChatMessage((prefix..'РћР±РЅРѕРІР»РµРЅРёРµ Р·Р°РІРµСЂС€РµРЅРѕ!'), color)
+						goupdatestatus = true
+						lua_thread.create(function() wait(500) thisScript():reload() end)
+					  end
+					  if status1 == dlstatus.STATUSEX_ENDDOWNLOAD then
+						if goupdatestatus == nil then
+						  sampAddChatMessage((prefix..'РћР±РЅРѕРІР»РµРЅРёРµ РїСЂРѕС€Р»Рѕ РЅРµСѓРґР°С‡РЅРѕ. Р—Р°РїСѓСЃРєР°СЋ СѓСЃС‚Р°СЂРµРІС€СѓСЋ РІРµСЂСЃРёСЋ..'), color)
+						  update = false
+						end
+					  end
+					end
+				  )
+				  end, prefix
+				)
+			  else
+				update = false
+				print('v'..thisScript().version..': РћР±РЅРѕРІР»РµРЅРёРµ РЅРµ С‚СЂРµР±СѓРµС‚СЃСЏ.')
+			  end
+			end
+		  else
+			print('v'..thisScript().version..': РќРµ РјРѕРіСѓ РїСЂРѕРІРµСЂРёС‚СЊ РѕР±РЅРѕРІР»РµРЅРёРµ. РЎРјРёСЂРёС‚РµСЃСЊ РёР»Рё РїСЂРѕРІРµСЂСЊС‚Рµ СЃР°РјРѕСЃС‚РѕСЏС‚РµР»СЊРЅРѕ РЅР° '..url)
+			update = false
+		  end
+		end
+	  end
+	)
+	while update ~= false do wait(100) end
 end
